@@ -2953,7 +2953,6 @@ export interface FeatureRestrictionDetailRequestDTO {
     | 'TERRAFORM_DESTROY'
     | 'TERRAFORM_ROLLBACK'
     | 'INTEGRATED_APPROVALS_WITH_SERVICE_NOW'
-    | 'SECURITY'
     | 'DEVELOPERS'
     | 'MONTHLY_ACTIVE_USERS'
 }
@@ -3008,7 +3007,6 @@ export interface FeatureRestrictionDetailsDTO {
     | 'TERRAFORM_DESTROY'
     | 'TERRAFORM_ROLLBACK'
     | 'INTEGRATED_APPROVALS_WITH_SERVICE_NOW'
-    | 'SECURITY'
     | 'DEVELOPERS'
     | 'MONTHLY_ACTIVE_USERS'
   restriction?: RestrictionDTO
@@ -3071,7 +3069,6 @@ export interface FeatureRestrictionMetadataDTO {
     | 'TERRAFORM_DESTROY'
     | 'TERRAFORM_ROLLBACK'
     | 'INTEGRATED_APPROVALS_WITH_SERVICE_NOW'
-    | 'SECURITY'
     | 'DEVELOPERS'
     | 'MONTHLY_ACTIVE_USERS'
   restrictionMetadata?: {
@@ -16722,7 +16719,6 @@ export interface FetchFeatureRestrictionMetadataPathParams {
     | 'TERRAFORM_DESTROY'
     | 'TERRAFORM_ROLLBACK'
     | 'INTEGRATED_APPROVALS_WITH_SERVICE_NOW'
-    | 'SECURITY'
     | 'DEVELOPERS'
     | 'MONTHLY_ACTIVE_USERS'
 }
@@ -16845,7 +16841,6 @@ export const fetchFeatureRestrictionMetadataPromise = (
       | 'TERRAFORM_DESTROY'
       | 'TERRAFORM_ROLLBACK'
       | 'INTEGRATED_APPROVALS_WITH_SERVICE_NOW'
-      | 'SECURITY'
       | 'DEVELOPERS'
       | 'MONTHLY_ACTIVE_USERS'
   },
