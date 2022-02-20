@@ -97,7 +97,7 @@ export const ApprovalStageMinimalMode: React.FC<ApprovalStageMinimalModeProps> =
               {getString('pipelineSteps.build.create.aboutYourStage')}
             </Text>
 
-            {contextType === PipelineContextType.Pipeline &&
+            {contextType !== PipelineContextType.StageTemplate &&
               (template ? (
                 <NameId
                   identifierProps={{

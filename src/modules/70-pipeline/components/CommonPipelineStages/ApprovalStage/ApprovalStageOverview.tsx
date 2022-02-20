@@ -101,7 +101,7 @@ export const ApprovalStageOverview: React.FC<ApprovalStageOverviewProps> = props
           >
             {formikProps => (
               <FormikForm>
-                {contextType === PipelineContextType.Pipeline && (
+                {contextType !== PipelineContextType.StageTemplate && (
                   <Card className={cx(css.sectionCard)}>
                     <NameIdDescriptionTags
                       formikProps={formikProps}
