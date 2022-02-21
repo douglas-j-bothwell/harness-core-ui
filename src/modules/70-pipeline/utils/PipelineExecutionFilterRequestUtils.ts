@@ -144,7 +144,7 @@ export const getCIModuleProperties = (buildType: BUILD_TYPE, contextInfo: BuildT
       moduleProperties = {
         ciExecutionInfoDTO: {
           event: 'pullRequest',
-          pullRequest: { sourceRepo: repositoryName, sourceBranch: sourceBranch, targetBranch: targetBranch }
+          pullRequest: { sourceBranch: sourceBranch, targetBranch: targetBranch }
         } as CIWebhookInfoDTO
       }
       break
@@ -160,7 +160,7 @@ export const getCIModuleProperties = (buildType: BUILD_TYPE, contextInfo: BuildT
       break
   }
 
-  return Object.assign(moduleProperties, { repoName: repositoryName ? [repositoryName] : undefined })
+  return Object.assign(moduleProperties, { repoName: repositoryName })
 }
 
 export const enum BUILD_TYPE {
