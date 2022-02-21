@@ -136,7 +136,7 @@ export const createRequestBodyPayload = ({
   }
 }
 
-export const getCIModuleProperties = (buildType: BUILD_TYPE, contextInfo: BuildTypeContext): any => {
+export const getCIModuleProperties = (buildType: BUILD_TYPE, contextInfo: BuildTypeContext): Record<string, any> => {
   const { repositoryName, sourceBranch, targetBranch, branch, tag } = contextInfo
   let moduleProperties = {}
   switch (buildType) {
