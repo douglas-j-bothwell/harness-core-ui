@@ -21,7 +21,7 @@ describe('Test util methods', () => {
       branch: 'develop'
     })
     expect(Object.prototype.hasOwnProperty.call(modulePropertiesForBranch, 'branch')).toBeTruthy()
-    const modulePropertiesForTag = getCIModuleProperties(BUILD_TYPE.BRANCH, {
+    const modulePropertiesForTag = getCIModuleProperties(BUILD_TYPE.TAG, {
       tag: 'release'
     })
     expect(Object.prototype.hasOwnProperty.call(modulePropertiesForTag, 'tag')).toBeTruthy()
