@@ -89,7 +89,7 @@ export const pipelinesListCallResponse = {
             infrastructureTypes: ['KubernetesDirect']
           },
           ci: {
-            repoName: 'harness-core-ui'
+            repoNames: ['CCD']
           }
         },
         stageNames: ['Stage 5', 'Stage 6', 'Stage 3', 'Stage 4', 'Stage 1', 'Stage 2'],
