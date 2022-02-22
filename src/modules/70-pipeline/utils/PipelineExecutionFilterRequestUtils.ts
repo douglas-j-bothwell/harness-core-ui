@@ -13,8 +13,6 @@ import { EXECUTION_STATUS } from '@pipeline/utils/statusHelpers'
 import type { FilterDataInterface, FilterInterface } from '@common/components/Filter/Constants'
 import { StringUtils } from '@common/exports'
 import type { CIWebhookInfoDTO } from 'services/ci'
-import type { FilterProperties } from 'services/cd-ng'
-import { isObjectEmpty, removeNullAndEmpty } from '@common/components/Filter/utils/FilterUtils'
 
 export interface DeploymentTypeContext {
   deploymentType?: MultiSelectOption[]
@@ -167,18 +165,6 @@ export const enum BUILD_TYPE {
   PULL_OR_MERGE_REQUEST = 'PULL_OR_MERGE_REQUEST',
   BRANCH = 'BRANCH',
   TAG = 'TAG'
-}
-
-export const getFilterWithValidFields = (
-  formData: PipelineExecutionFormType | undefined,
-  filterProperties: FilterProperties | undefined
-): Partial<PipelineExecutionFormType> | Partial<FilterProperties> | undefined => {
-  if (!isObjectEmpty(filterProperties || {})) {
-    return removeNullAndEmpty(omit(filterProperties, 'filterType'))
-  } else if (!isObjectEmpty(formData || {})) {
-    return removeNullAndEmpty(formData || {})
-  }
-  return {}
 }
 
 export const getBuildType = (moduleProperties: {
