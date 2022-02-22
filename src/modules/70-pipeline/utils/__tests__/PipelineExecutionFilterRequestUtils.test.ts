@@ -9,13 +9,17 @@ import { BUILD_TYPE, getCIModuleProperties } from '../PipelineExecutionFilterReq
 
 describe('Test util methods', () => {
   test('Test getCIModuleProperties method', () => {
-    const moduleProperties = getCIModuleProperties(BUILD_TYPE.PULL_OR_MERGE_REQUEST, {
+    const modulePropertiesForPullRequest = getCIModuleProperties(BUILD_TYPE.PULL_OR_MERGE_REQUEST, {
       buildType: BUILD_TYPE.PULL_OR_MERGE_REQUEST,
       repositoryName: 'harness-core-ui',
       sourceBranch: 'feature-branch',
       targetBranch: 'develop'
     })
-    expect(Object.prototype.hasOwnProperty.call(moduleProperties, 'ciExecutionInfoDTO')).toBeTruthy()
-    expect(Object.prototype.hasOwnProperty.call(moduleProperties, 'repoName')).toBeTruthy()
+    expect(Object.prototype.hasOwnProperty.call(modulePropertiesForPullRequest, 'ciExecutionInfoDTO')).toBeTruthy()
+    expect(Object.prototype.hasOwnProperty.call(modulePropertiesForPullRequest, 'repoName')).toBeTruthy()
+    const modulePropertiesForBranch = getCIModuleProperties(BUILD_TYPE.BRANCH, {
+      branch: 'develop'
+    })
+    expect(Object.prototype.hasOwnProperty.call(modulePropertiesForBranch, 'branch')).toBeTruthy()
   })
 })
