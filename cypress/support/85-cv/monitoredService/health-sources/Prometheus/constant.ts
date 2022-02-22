@@ -1,5 +1,10 @@
-export const sampleDataAPI =
-  '/cv/api/prometheus/sample-data?routingId=accountId&accountId=accountId&projectIdentifier=project1&orgIdentifier=default&query=*&tracingId=*&connectorIdentifier=prometheussale'
+const accountId = 'accountId'
+const orgIdentifier = 'default'
+const projectIdentifier = 'project1'
+const connectorIdentifier = 'prometheussale'
+const dataSourceType = 'PROMETHEUS'
+
+export const sampleDataAPI = `/cv/api/prometheus/sample-data?routingId=${accountId}&accountId=${accountId}&projectIdentifier=${projectIdentifier}&orgIdentifier=${orgIdentifier}&query=*&tracingId=*&connectorIdentifier=${connectorIdentifier}`
 
 export const sampleDataResponse = {
   status: 'SUCCESS',
@@ -37,18 +42,17 @@ export const sampleDataResponse = {
   correlationId: 'e73f74cd-2dec-49eb-9ea2-cfdf43961ed3'
 }
 
-export const metricPackAPI =
-  '/cv/api/metric-pack?routingId=accountId&projectIdentifier=project1&orgIdentifier=default&accountId=accountId&dataSourceType=PROMETHEUS'
+export const metricPackAPI = `/cv/api/metric-pack?routingId=${accountId}&projectIdentifier=${projectIdentifier}&orgIdentifier=${orgIdentifier}&accountId=${accountId}&dataSourceType=${dataSourceType}`
 
 export const metricPackResponse = {
   metaData: {},
   resource: [
     {
       uuid: 'f3VK7oDoSXaVJmxZAEPHVQ',
-      accountId: 'zEaak-FLS425IEO7OLzMUg',
-      orgIdentifier: 'default',
-      projectIdentifier: 'my_project_x',
-      dataSourceType: 'PROMETHEUS',
+      accountId,
+      orgIdentifier,
+      projectIdentifier,
+      dataSourceType,
       identifier: 'Errors',
       category: 'Errors',
       metrics: [
@@ -67,10 +71,10 @@ export const metricPackResponse = {
     },
     {
       uuid: 'inNziIl5TtGFjAtu05qQFg',
-      accountId: 'zEaak-FLS425IEO7OLzMUg',
-      orgIdentifier: 'default',
-      projectIdentifier: 'my_project_x',
-      dataSourceType: 'PROMETHEUS',
+      accountId,
+      orgIdentifier,
+      projectIdentifier,
+      dataSourceType,
       identifier: 'Infrastructure',
       category: 'Infrastructure',
       metrics: [
@@ -89,10 +93,10 @@ export const metricPackResponse = {
     },
     {
       uuid: 'sxlCCw3hSMWVFq9C3QYSlQ',
-      accountId: 'zEaak-FLS425IEO7OLzMUg',
-      orgIdentifier: 'default',
-      projectIdentifier: 'my_project_x',
-      dataSourceType: 'PROMETHEUS',
+      accountId,
+      orgIdentifier,
+      projectIdentifier,
+      dataSourceType,
       identifier: 'Performance',
       category: 'Performance',
       metrics: [
@@ -133,8 +137,7 @@ export const metricPackResponse = {
   responseMessages: []
 }
 
-export const labelNamesAPI =
-  '/cv/api/prometheus/label-names?routingId=accountId&projectIdentifier=project1&orgIdentifier=default&accountId=accountId&connectorIdentifier=prometheussale&tracingId=*'
+export const labelNamesAPI = `/cv/api/prometheus/label-names?routingId=${accountId}&projectIdentifier=${projectIdentifier}&orgIdentifier=${orgIdentifier}&accountId=${accountId}&connectorIdentifier=${connectorIdentifier}&tracingId=*`
 
 export const labelNamesResponse = {
   status: 'SUCCESS',
@@ -156,11 +159,9 @@ export const labelNamesResponse = {
   correlationId: '49e05f9e-2098-4efe-a7ee-c9b74083c436'
 }
 
-export const labelValuesAPI =
-  '/cv/api/prometheus/label-values?routingId=accountId&projectIdentifier=project1&orgIdentifier=default&accountId=accountId&connectorIdentifier=prometheussale&labelName=*&tracingId=*'
+export const labelValuesAPI = `/cv/api/prometheus/label-values?routingId=${accountId}&projectIdentifier=${projectIdentifier}&orgIdentifier=${orgIdentifier}&accountId=${accountId}&connectorIdentifier=${connectorIdentifier}&labelName=*&tracingId=*`
 
-export const metricListAPI =
-  '/cv/api/prometheus/metric-list?routingId=accountId&projectIdentifier=project1&orgIdentifier=default&accountId=accountId&tracingId=*&connectorIdentifier=prometheussale'
+export const metricListAPI = `/cv/api/prometheus/metric-list?routingId=${accountId}&projectIdentifier=${projectIdentifier}&orgIdentifier=${orgIdentifier}&accountId=${accountId}&tracingId=*&connectorIdentifier=${connectorIdentifier}`
 
 export const metricListResponse = {
   status: 'SUCCESS',
@@ -231,8 +232,8 @@ export const monitoredService = {
     createdAt: 1642157779711,
     lastModifiedAt: 1643278935584,
     monitoredService: {
-      orgIdentifier: 'default',
-      projectIdentifier: 'project1',
+      orgIdentifier,
+      projectIdentifier,
       identifier: 'service1_env1',
       name: 'service1_env1',
       type: 'Application',
@@ -248,7 +249,7 @@ export const monitoredService = {
             identifier: 'Prometheus',
             type: 'Prometheus',
             spec: {
-              connectorRef: 'prometheussale',
+              connectorRef: connectorIdentifier,
               metricDefinitions: [
                 {
                   identifier: 'prometheus_metric',
@@ -341,8 +342,8 @@ export const monitoredServiceForBuildQuery = {
     createdAt: 1642157779711,
     lastModifiedAt: 1643278935584,
     monitoredService: {
-      orgIdentifier: 'default',
-      projectIdentifier: 'project1',
+      orgIdentifier,
+      projectIdentifier,
       identifier: 'service1_env1',
       name: 'service1_env1',
       type: 'Application',
@@ -358,7 +359,7 @@ export const monitoredServiceForBuildQuery = {
             identifier: 'Prometheus',
             type: 'Prometheus',
             spec: {
-              connectorRef: 'prometheussale',
+              connectorRef: connectorIdentifier,
               metricDefinitions: [
                 {
                   identifier: 'prometheus_metric',

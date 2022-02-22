@@ -54,18 +54,7 @@ describe('Health Source - Prometheus', () => {
     cy.fillField('metricName', 'Prometheus Metric')
     cy.contains('span', 'Metric Name is required.').should('not.exist')
 
-    cy.get('input[name="groupName"]').click()
-    cy.contains('p', '+ Add New').click()
-
-    cy.contains('p', 'New Prometheus Group Name').should('be.visible')
-
-    cy.get('.bp3-overlay button[type="submit"]').click()
-
-    cy.contains('span', 'Name is required.').should('be.visible')
-    cy.get('.bp3-overlay input[name="name"]').type('Group 1')
-    cy.contains('span', 'Name is required.').should('not.exist')
-
-    cy.get('.bp3-overlay button[type="submit"]').click()
+    cy.addingGroupName('Group 1')
 
     cy.get('input[name="groupName"]').should('contain.value', 'Group 1')
 
@@ -178,11 +167,7 @@ describe('Health Source - Prometheus', () => {
 
     cy.contains('h2', 'Query Specifications and Mapping').should('be.visible')
 
-    cy.get('input[name="groupName"]').click()
-    cy.contains('p', '+ Add New').click()
-    cy.contains('p', 'New Prometheus Group Name').should('be.visible')
-    cy.get('.bp3-overlay input[name="name"]').type('Group 1')
-    cy.get('.bp3-overlay button[type="submit"]').click()
+    cy.addingGroupName('Group 1')
     cy.get('input[name="groupName"]').should('contain.value', 'Group 1')
 
     cy.contains('div', 'Build your Query').should('be.visible')
