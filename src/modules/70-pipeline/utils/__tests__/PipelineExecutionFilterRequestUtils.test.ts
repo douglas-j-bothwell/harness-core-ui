@@ -5,25 +5,61 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import { BUILD_TYPE, getCIModuleProperties } from '../PipelineExecutionFilterRequestUtils'
+import { BUILD_TYPE, getCIModuleProperties, getValidFilterArguments } from '../PipelineExecutionFilterRequestUtils'
 
 describe('Test util methods', () => {
   test('Test getCIModuleProperties method', () => {
-    const modulePropertiesForPullRequest = getCIModuleProperties(BUILD_TYPE.PULL_OR_MERGE_REQUEST, {
-      buildType: BUILD_TYPE.PULL_OR_MERGE_REQUEST,
-      repositoryName: 'harness-core-ui',
-      sourceBranch: 'feature-branch',
-      targetBranch: 'develop'
+    expect(
+      getCIModuleProperties(BUILD_TYPE.PULL_OR_MERGE_REQUEST, {
+        buildType: BUILD_TYPE.PULL_OR_MERGE_REQUEST,
+        repositoryName: 'harness-core-ui',
+        sourceBranch: 'feature-branch',
+        targetBranch: 'develop'
+      })
+    ).toEqual({
+      ciExecutionInfoDTO: {
+        event: 'pullRequest',
+        pullRequest: { sourceBranch: 'feature-branch', targetBranch: 'develop' }
+      },
+      repoName: 'harness-core-ui'
     })
-    expect(Object.prototype.hasOwnProperty.call(modulePropertiesForPullRequest, 'ciExecutionInfoDTO')).toBeTruthy()
-    expect(Object.prototype.hasOwnProperty.call(modulePropertiesForPullRequest, 'repoName')).toBeTruthy()
-    const modulePropertiesForBranch = getCIModuleProperties(BUILD_TYPE.BRANCH, {
-      branch: 'develop'
-    })
-    expect(Object.prototype.hasOwnProperty.call(modulePropertiesForBranch, 'branch')).toBeTruthy()
-    const modulePropertiesForTag = getCIModuleProperties(BUILD_TYPE.TAG, {
+
+    expect(
+      getCIModuleProperties(BUILD_TYPE.BRANCH, {
+        branch: 'develop'
+      })
+    ).toEqual({ branch: 'develop' })
+
+    expect(
+      getCIModuleProperties(BUILD_TYPE.TAG, {
+        tag: 'release'
+      })
+    ).toEqual({
       tag: 'release'
     })
-    expect(Object.prototype.hasOwnProperty.call(modulePropertiesForTag, 'tag')).toBeTruthy()
+  })
+
+  test('Test method getValidFilterArguments', () => {
+    expect(
+      getValidFilterArguments({
+        pipelineName: 'test-pipeline',
+        repositoryName: 'harness-core-ui',
+        sourceBranch: 'develop',
+        targetBranch: 'master',
+        buildType: 'PULL_OR_MERGE_REQUEST'
+      })
+    ).toEqual({
+      pipelineName: 'test-pipeline',
+      moduleProperties: {
+        ci: {
+          ciExecutionInfoDTO: {
+            event: 'pullRequest',
+            pullRequest: { sourceBranch: 'develop', targetBranch: 'master' }
+          },
+          repoName: 'harness-core-ui'
+        },
+        cd: {}
+      }
+    })
   })
 })
