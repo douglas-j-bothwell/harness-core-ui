@@ -781,9 +781,12 @@ export interface StringsMap {
   'auditTrail.emptyStateMessage': string
   'auditTrail.emptyStateMessageTitle': string
   'auditTrail.eventSource': string
+  'auditTrail.eventSummary': string
   'auditTrail.externalDataText': string
   'auditTrail.http': string
+  'auditTrail.noYamlDifference': string
   'auditTrail.supplementaryDetails': string
+  'auditTrail.yamlDifference': string
   'rbac.accessControlTitle.resourceGroups': string
   'rbac.accessControlTitle.roles': string
   'rbac.accessControlTitle.serviceAccounts': string
@@ -3931,7 +3934,6 @@ export interface StringsMap {
   'cf.auditLogs.createdMessageFFUpdate': string
   'cf.auditLogs.createdMessageSegment': string
   'cf.auditLogs.empty': string
-  'cf.auditLogs.eventSummary': string
   'cf.auditLogs.events.addPrerequisite': string
   'cf.auditLogs.events.addRule': string
   'cf.auditLogs.events.addSegmentToVariationTargetMap': string
@@ -3971,7 +3973,6 @@ export interface StringsMap {
   'cf.auditLogs.updateMessageSegment': string
   'cf.auditLogs.user': string
   'cf.auditLogs.viewEventSummary': string
-  'cf.auditLogs.yamlDifference': string
   'cf.boolean': string
   'cf.cfTrialHomePage.startTrial.description': string
   'cf.cfTrialHomePage.startTrial.startBtn.description': string

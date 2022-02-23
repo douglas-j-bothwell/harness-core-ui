@@ -5,7 +5,7 @@
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
 
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import { TableV2, Text, Layout, Avatar, Icon, Container, Color, Popover } from '@wings-software/uicore'
 import type { Column, Renderer, CellProps } from 'react-table'
 import { Link, useParams } from 'react-router-dom'
@@ -17,6 +17,7 @@ import { useStrings } from 'framework/strings'
 import { getReadableDateTime } from '@common/utils/dateUtils'
 import AuditTrailFactory, { getModuleNameFromAuditModule } from '@audit-trail/factories/AuditTrailFactory'
 import type { OrgPathProps } from '@common/interfaces/RouteInterfaces'
+import EventSummary from '@audit-trail/components/EventSummary/EventSummary'
 
 import css from './AuditTrailsListView.module.scss'
 
@@ -65,6 +66,8 @@ const renderColumnProject: Renderer<CellProps<AuditEventDTO>> = ({ row }) => {
 
 const AuditTrailsListView: React.FC<AuditTrailsListViewProps> = ({ data, setPage }) => {
   const { orgIdentifier } = useParams<OrgPathProps>()
+  const [showEventSummary, setShowEventSummary] = useState<boolean>(true)
+  const [selectedAuditEvent, setSelectedAuditEvent] = useState<AuditEventDTO | undefined>()
   const { getString } = useStrings()
 
   const renderColumnResource: Renderer<CellProps<AuditEventDTO>> = ({ row }) => {
@@ -104,17 +107,17 @@ const AuditTrailsListView: React.FC<AuditTrailsListViewProps> = ({ data, setPage
   }
 
   const renderColumnModule: Renderer<CellProps<AuditEventDTO>> = ({ row }) => {
-    const { moduleIcon, moduleIconLabel } = AuditTrailFactory.getResourceHandler(row.original.resource.type) || {}
+    const { moduleIcon, moduleLabel } = AuditTrailFactory.getResourceHandler(row.original.resource.type) || {}
     return moduleIcon?.name ? (
       <Container flex={{ justifyContent: 'center' }}>
-        {moduleIconLabel ? (
+        {moduleLabel ? (
           <Popover
             position={Position.TOP}
             interactionKind={PopoverInteractionKind.HOVER}
             className={Classes.DARK}
             content={
               <Text color={Color.WHITE} padding="small">
-                {getString(moduleIconLabel)}
+                {getString(moduleLabel)}
               </Text>
             }
           >
@@ -137,26 +140,42 @@ const AuditTrailsListView: React.FC<AuditTrailsListViewProps> = ({ data, setPage
     )
   }
 
+  const renderEventSummary: Renderer<CellProps<AuditEventDTO>> = ({ row }) => {
+    return (
+      <Layout.Horizontal flex={{ justifyContent: 'center' }}>
+        <Icon
+          name="main-notes"
+          size={20}
+          className={css.notesIcon}
+          onClick={() => {
+            setShowEventSummary(true)
+            setSelectedAuditEvent(row.original)
+          }}
+        />
+      </Layout.Horizontal>
+    )
+  }
+
   const columns: Column<AuditEventDTO>[] = [
     {
       Header: getString('common.timePstLabel'),
       id: 'time',
       accessor: row => row.timestamp,
-      width: '10%',
+      width: '8%',
       Cell: renderColumnTimeStamp
     },
     {
       Header: getString('common.userLabel'),
       id: 'user',
       accessor: row => row.authenticationInfo.principal.identifier,
-      width: orgIdentifier ? '20%' : '18%',
+      width: orgIdentifier ? '18%' : '16%',
       Cell: renderColumnUser
     },
     {
       Header: getString('action'),
       id: 'action',
       accessor: row => row.action,
-      width: '12%',
+      width: '10%',
       Cell: renderColumnAction
     },
     {
@@ -166,6 +185,7 @@ const AuditTrailsListView: React.FC<AuditTrailsListViewProps> = ({ data, setPage
       width: orgIdentifier ? '23%' : '18%',
       Cell: renderColumnResource
     },
+    // If orgIdentifier is not present, organisation column will be visible
     ...(!orgIdentifier
       ? [
           {
@@ -181,7 +201,7 @@ const AuditTrailsListView: React.FC<AuditTrailsListViewProps> = ({ data, setPage
       Header: getString('projectLabel'),
       id: 'project',
       accessor: row => row.resourceScope.projectIdentifier,
-      width: orgIdentifier ? '20%' : '15%',
+      width: orgIdentifier ? '18' : '13%',
       Cell: renderColumnProject
     },
     {
@@ -194,8 +214,15 @@ const AuditTrailsListView: React.FC<AuditTrailsListViewProps> = ({ data, setPage
       accessor: row => row.module,
       width: '12%',
       Cell: renderColumnModule
+    },
+    {
+      Header: '',
+      id: 'eventSummary',
+      width: '8%',
+      Cell: renderEventSummary
     }
   ]
+
   return (
     <>
       <TableV2<AuditEventDTO>
@@ -211,6 +238,9 @@ const AuditTrailsListView: React.FC<AuditTrailsListViewProps> = ({ data, setPage
           className: css.pagination
         }}
       />
+      {showEventSummary && selectedAuditEvent && (
+        <EventSummary auditEvent={selectedAuditEvent} onClose={() => setShowEventSummary(false)} />
+      )}
     </>
   )
 }

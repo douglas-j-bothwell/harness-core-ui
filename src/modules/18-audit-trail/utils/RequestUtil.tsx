@@ -199,3 +199,15 @@ export const getOrgDropdownList = (list: OrganizationAggregateDTO[]): MultiSelec
     value: org.organizationResponse.organization.identifier
   }))
 }
+
+export const getStringFromLabelMap = (map: Record<string, string | undefined>): string => {
+  const keysArr = Object.keys(map)
+  return keysArr.reduce((str, key, index) => {
+    const value = map[key]
+    if (value) {
+      const label = `${key}: ${map[key]}`
+      return str + label + (index === keysArr.length - 1 ? '' : ' | ')
+    }
+    return str
+  }, '')
+}

@@ -34,7 +34,7 @@ export const getModuleNameFromAuditModule = (auditModule: AuditEventDTO['module'
 
 interface ResourceHandler {
   moduleIcon: IconProps
-  moduleIconLabel?: StringKeys
+  moduleLabel?: StringKeys
   resourceUrl?: (resource: ResourceDTO, resourceScope: ResourceScope, module?: Module) => string | undefined
 }
 
