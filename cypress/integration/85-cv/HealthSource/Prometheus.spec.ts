@@ -54,9 +54,11 @@ describe('Health Source - Prometheus', () => {
     cy.fillField('metricName', 'Prometheus Metric')
     cy.contains('span', 'Metric Name is required.').should('not.exist')
 
+    cy.findByRole('button', { name: /Submit/i }).click()
+    cy.contains('span', 'Group Name is required.').should('be.visible')
     cy.addingGroupName('Group 1')
-
     cy.get('input[name="groupName"]').should('contain.value', 'Group 1')
+    cy.contains('span', 'Group Name is required.').should('not.exist')
 
     cy.contains('div', 'Build your Query').should('be.visible')
     cy.get('button span[data-icon="Edit"]').click()
@@ -115,6 +117,8 @@ describe('Health Source - Prometheus', () => {
 
     cy.findByRole('button', { name: /Add Metric/i }).click()
 
+    cy.contains('div', 'Map Metric(s) to Harness Services').click()
+
     cy.fillField('metricName', 'Prometheus Metric')
 
     cy.contains('span', 'Metric name must be unique.').should('be.visible')
@@ -132,7 +136,7 @@ describe('Health Source - Prometheus', () => {
     cy.contains('div', 'Assign').click()
     cy.get('input[name="sli"]').click({ force: true })
 
-    cy.findByRole('button', { name: /Submit/i }).click()
+    cy.findByRole('button', { name: /Submit/i }).click({ force: true })
   })
 
   it('should be able to edit an existing Prometheus health source of manual query', () => {
@@ -151,6 +155,8 @@ describe('Health Source - Prometheus', () => {
 
     cy.findByRole('button', { name: /Next/i }).click()
     cy.findByRole('button', { name: /Submit/i }).click()
+    cy.findByRole('button', { name: /Save/i }).click()
+    cy.contains('span', 'Monitored Service updated').should('be.visible')
   })
 
   it('should be able to add Prometheus HS by building a query', () => {
@@ -187,28 +193,30 @@ describe('Health Source - Prometheus', () => {
 
     cy.intercept('GET', sampleDataAPI, sampleDataResponse)
 
+    cy.findByRole('button', { name: /Submit/i }).click()
+
+    cy.contains('span', 'Prometheus Metric is required.').should('be.visible')
     cy.get('input[name="prometheusMetric"]').click({ force: true })
     cy.contains('p', 'classes').click()
+    cy.contains('span', 'Prometheus Metric is required.').should('not.exist')
 
     cy.intercept('GET', labelValuesAPI, metricListResponse)
 
-    cy.get('input[name="envFilter"]').focus().blur()
     cy.contains('span', 'Filter on Environment is required.').should('be.visible')
-
     cy.get('input[name="envFilter"]').click({ force: true })
     cy.contains('p', '__name__').click()
     cy.contains('p', 'classes').click()
     cy.contains('span', 'Filter on Environment').click()
+    cy.contains('span', 'Filter on Environment is required.').should('not.exist')
 
     cy.wait(1000)
 
-    cy.get('input[name="serviceFilter"]').focus().blur()
     cy.contains('span', 'Filter on Service required.').should('be.visible')
-
     cy.get('input[name="serviceFilter"]').click({ force: true })
     cy.contains('p', 'generation').click()
     cy.contains('p', 'classes_loaded').click()
     cy.contains('span', 'Filter on Service').click()
+    cy.contains('span', 'Filter on Service required.').should('not.exist')
 
     cy.wait(1000)
 
@@ -224,6 +232,8 @@ describe('Health Source - Prometheus', () => {
     cy.get('input[name="sli"]').click({ force: true })
 
     cy.findByRole('button', { name: /Submit/i }).click()
+    cy.findByRole('button', { name: /Save/i }).click()
+    cy.contains('span', 'Monitored Service created').should('be.visible')
   })
 
   it('should be able to edit an existing Prometheus health source of Build query', () => {
@@ -243,5 +253,7 @@ describe('Health Source - Prometheus', () => {
 
     cy.findByRole('button', { name: /Next/i }).click()
     cy.findByRole('button', { name: /Submit/i }).click()
+    cy.findByRole('button', { name: /Save/i }).click()
+    cy.contains('span', 'Monitored Service updated').should('be.visible')
   })
 })
