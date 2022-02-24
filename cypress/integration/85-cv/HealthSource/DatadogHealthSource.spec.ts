@@ -127,7 +127,6 @@ describe('Configure Datadog health source', () => {
     cy.contains('span', 'Service Instance is required.').should('be.visible')
     cy.contains('p', 'Submit query to see records from Datadog Logs').should('be.visible')
 
-    // cy.get('textarea[name="query"]').click({ force: true })
     cy.fillField('query', 'source:browser')
     cy.contains('span', 'Query is required.').should('not.exist')
 
