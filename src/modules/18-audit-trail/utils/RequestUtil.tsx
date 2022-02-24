@@ -200,14 +200,11 @@ export const getOrgDropdownList = (list: OrganizationAggregateDTO[]): MultiSelec
   }))
 }
 
-export const getStringFromLabelMap = (map: Record<string, string | undefined>): string => {
+const SEPARATOR = '|'
+export const getStringFromSubtitleMap = (map: Record<string, string | undefined>): string => {
   const keysArr = Object.keys(map)
-  return keysArr.reduce((str, key, index) => {
-    const value = map[key]
-    if (value) {
-      const label = `${key}: ${map[key]}`
-      return str + label + (index === keysArr.length - 1 ? '' : ' | ')
-    }
-    return str
-  }, '')
+  const arr: string[] = keysArr.reduce((finalArr: string[], key: string) => {
+    return map[key] ? [...finalArr, `${key}: ${map[key]}`] : finalArr
+  }, [])
+  return arr.reduce((str, text) => `${str} ${SEPARATOR} ${text}`)
 }
